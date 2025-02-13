@@ -42,16 +42,13 @@ import com.example.happybirthday.ui.theme.HappyBirthdayTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         setContent {
-            HappyBirthdayTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    GreetingImage(
-                        stringResource(R.string.happy_birthday_text),
-                        stringResource(R.string.signature_text)
+            HelloWorld2Theme {
+                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                    Greeting(
+                        name = "Jerone",
+                        modifier = Modifier.padding(innerPadding)
                     )
                 }
             }
@@ -60,58 +57,17 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun GreetingText(message: String, from: String, modifier: Modifier = Modifier) {
-    // Create a column so that texts don't overlap
-    Column(
-        verticalArrangement = Arrangement.Center,
+fun Greeting(name: String, modifier: Modifier = Modifier) {
+    Text(
+        text = "Hello $name!",
         modifier = modifier
-    ) {
-        Text(
-            text = message,
-            fontSize = 100.sp,
-            lineHeight = 116.sp,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.padding(top = 16.dp)
-        )
-        Text(
-            text = from,
-            fontSize = 36.sp,
-            modifier = Modifier
-                .padding(top = 16.dp)
-                .padding(end = 16.dp)
-                .align(alignment = Alignment.End)
-
-        )
-    }
+    )
 }
 
+@Preview(showBackground = true)
 @Composable
-fun GreetingImage(message: String, from: String, modifier: Modifier = Modifier) {
-    // Create a box to overlap image and texts
-    Box(modifier) {
-        Image(
-            painter = painterResource(id = R.drawable.androidparty),
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
-            alpha = 0.5F
-        )
-        GreetingText(
-            message = message,
-            from = from,
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(8.dp)
-        )
-    }
-}
-
-@Preview(showBackground = false)
-@Composable
-private fun BirthdayCardPreview() {
-    HappyBirthdayTheme {
-        GreetingImage(
-            stringResource(R.string.happy_birthday_text),
-            stringResource(R.string.signature_text)
-        )
+fun GreetingPreview() {
+    HelloWorld2Theme {
+        Greeting("Jerone")
     }
 }
